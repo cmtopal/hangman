@@ -8,58 +8,57 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#f5f5f0;font-family:-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
   -webkit-tap-highlight-color:transparent;min-height:100vh;}
-#app{max-width:440px;margin:0 auto;padding:14px 12px 32px;}
+#app{max-width:440px;margin:0 auto;padding:14px 10px 32px;}
 
-/* header */
 .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .title{font-size:22px;font-weight:800;color:#222;}
 .stat{text-align:right;}
 .stat-v{font-size:18px;font-weight:700;color:#222;}
 .stat-l{font-size:10px;color:#999;}
 
-/* category */
 .cat{text-align:center;font-size:12px;font-weight:600;color:#888;
   letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
 
-/* hangman drawing */
 .gallows-wrap{display:flex;justify-content:center;margin-bottom:14px;}
 canvas{display:block;}
 
-/* word display */
-.word-row{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.word-row{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;margin-bottom:16px;}
 .letter-box{
-  width:28px;height:36px;border-bottom:2.5px solid #333;
+  width:26px;height:34px;border-bottom:2.5px solid #333;
   display:flex;align-items:flex-end;justify-content:center;
-  font-size:20px;font-weight:800;color:#222;padding-bottom:2px;
+  font-size:18px;font-weight:800;color:#222;padding-bottom:2px;
 }
-.letter-box.space{border-bottom:none;width:14px;}
+.letter-box.space{border-bottom:none;width:12px;}
 
-/* wrong letters */
-.wrong-row{min-height:28px;text-align:center;margin-bottom:14px;
-  font-size:14px;color:#cc2222;font-weight:600;letter-spacing:2px;}
+.wrong-row{min-height:26px;text-align:center;margin-bottom:12px;
+  font-size:13px;color:#cc2222;font-weight:600;letter-spacing:2px;}
 
-/* keyboard */
-.kbd{display:flex;flex-direction:column;gap:5px;margin-bottom:16px;}
-.kbd-row{display:flex;justify-content:center;gap:4px;}
+/* Klavye: her satırdaki harf sayısına göre eşit bölünür */
+.kbd{display:flex;flex-direction:column;gap:4px;margin-bottom:14px;width:100%;}
+.kbd-row{display:flex;width:100%;}
 .k{
-  min-width:30px;height:40px;padding:0 4px;
-  border:1.5px solid #ccc;border-radius:7px;
-  background:#fff;font-size:14px;font-weight:700;color:#333;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex:1;
+  height:38px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  margin:0 2px;
+  background:#fff;
+  font-size:clamp(11px, 3vw, 14px);
+  font-weight:700;color:#333;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
   -webkit-user-select:none;user-select:none;
 }
 .k:active{background:#ddd;}
 .k.hit{background:#4caf50;color:#fff;border-color:#4caf50;}
-.k.miss{background:#ddd;color:#aaa;border-color:#ddd;}
+.k.miss{background:#e0e0e0;color:#bbb;border-color:#e0e0e0;}
 
-/* hint & new */
 .actions{display:flex;gap:8px;}
 .abtn{flex:1;padding:11px;border:1.5px solid #ccc;border-radius:10px;
   background:#fff;font-size:13px;font-weight:700;color:#444;cursor:pointer;}
 .abtn.primary{background:#222;color:#fff;border-color:#222;}
 .abtn:active{opacity:.8;}
 
-/* overlay */
 #ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
   align-items:center;justify-content:center;z-index:99;}
 #ov.on{display:flex;}
@@ -111,14 +110,14 @@ var WORDS=[
   {w:'GEMİ',c:'Taşıt',h:'Denizde yüzer'},
   {w:'TREN',c:'Taşıt',h:'Raylarda ilerler'},
   {w:'OTOMOBİL',c:'Taşıt',h:'Dört tekerlekli araç'},
-  {w:'HELIKOPTER',c:'Taşıt',h:'Pervanesi döner'},
+  {w:'HELİKOPTER',c:'Taşıt',h:'Pervanesi döner'},
   {w:'ASLAN',c:'Hayvan',h:'Ormanın kralı'},
   {w:'FİL',c:'Hayvan',h:'En büyük kara hayvanı'},
   {w:'ZÜRAFa',c:'Hayvan',h:'Boynu çok uzun'},
-  {w:'PENGUEN',c:'Hayvan',h:'Antarktika\'da yaşar'},
+  {w:'PENGUEN',c:'Hayvan',h:'Antarktikada yaşar'},
   {w:'YUNUS',c:'Hayvan',h:'Denizde yaşar, akıllıdır'},
   {w:'KELEBEK',c:'Hayvan',h:'Kanatlı, çiçekleri sever'},
-  {w:'TIMSAH',c:'Hayvan',h:'Sürüngen, dişleri büyük'},
+  {w:'TİMSAH',c:'Hayvan',h:'Sürüngen, dişleri büyük'},
   {w:'AHTAPOT',c:'Hayvan',h:'Sekiz kolu var'},
   {w:'KARTAL',c:'Hayvan',h:'Gökyüzünün hükümdarı'},
   {w:'ELMA',c:'Meyve',h:'Kırmızı veya yeşil'},
@@ -130,8 +129,8 @@ var WORDS=[
   {w:'KİRAZ',c:'Meyve',h:'İkili gelir, sapı uzun'},
   {w:'ANANAS',c:'Meyve',h:'Tropikal, dikenli kabuğu var'},
   {w:'İSTANBUL',c:'Şehir',h:'İki kıtada kurulu şehir'},
-  {w:'ANKARA',c:'Şehir',h:'Türkiye\'nin başkenti'},
-  {w:'İZMİR',c:'Şehir',h:'Ege\'nin incisi'},
+  {w:'ANKARA',c:'Şehir',h:'Türkiyenin başkenti'},
+  {w:'İZMİR',c:'Şehir',h:'Egenin incisi'},
   {w:'ANTALYA',c:'Şehir',h:'Turizm cenneti'},
   {w:'BURSA',c:'Şehir',h:'Yeşil şehir'},
   {w:'KAPADOKYA',c:'Şehir',h:'Peri bacaları burada'},
@@ -140,16 +139,15 @@ var WORDS=[
   {w:'BASKETBOL',c:'Spor',h:'Potaya atılır'},
   {w:'TENİS',c:'Spor',h:'Raket kullanılır'},
   {w:'YÜZME',c:'Spor',h:'Suda yapılır'},
-  {w:'VOLEYBOL',c:'Spor',h:'File üzerinden oynananır'},
-  {w:'GÜREŞ',c:'Spor',h:'Türk\'ün milli sporu'},
+  {w:'VOLEYBOL',c:'Spor',h:'File üzerinden oynanır'},
+  {w:'GÜREŞ',c:'Spor',h:'Türkün milli sporu'},
   {w:'OKÇULUK',c:'Spor',h:'Yay ve ok kullanılır'},
   {w:'GÜNEŞ',c:'Uzay',h:'Sistemimizin yıldızı'},
   {w:'AY',c:'Uzay',h:'Geceleri parlar'},
   {w:'MARS',c:'Uzay',h:'Kızıl gezegen'},
   {w:'SATÜRN',c:'Uzay',h:'Halkaları olan gezegen'},
-  {w:'KOMETEr',c:'Uzay',h:'Kuyruklu yıldız'},
   {w:'ASTRONOT',c:'Uzay',h:'Uzaya giden insan'},
-  {w:'GALAKSI',c:'Uzay',h:'Milyarlarca yıldız barındırır'},
+  {w:'GALAKSİ',c:'Uzay',h:'Milyarlarca yıldız barındırır'},
   {w:'PİYANO',c:'Müzik',h:'Tuşları olan çalgı'},
   {w:'GİTAR',c:'Müzik',h:'Telli çalgı'},
   {w:'KEMAN',c:'Müzik',h:'Yay ile çalınır'},
@@ -160,25 +158,25 @@ var WORDS=[
   {w:'BÖREK',c:'Yemek',h:'Hamur işi'},
   {w:'DÖNER',c:'Yemek',h:'Dönerek pişer'},
   {w:'LAHMACUN',c:'Yemek',h:'İnce hamurlu Türk pizzası'},
-  {w:'MERCIMEK',c:'Yemek',h:'Çorba yapılır'},
+  {w:'MERCİMEK',c:'Yemek',h:'Çorba yapılır'},
   {w:'ÇORBA',c:'Yemek',h:'Sıcak sıvı yemek'},
   {w:'SİNEMA',c:'Eğlence',h:'Film izlenen yer'},
   {w:'TİYATRO',c:'Eğlence',h:'Sahne sanatı'},
   {w:'MÜZE',c:'Eğlence',h:'Tarihi eserlerin yeri'},
   {w:'KÜTÜPHANE',c:'Eğlence',h:'Kitapların evi'},
-  {w:'OLIMPIYAT',c:'Spor',h:'Her 4 yılda bir düzenlenir'},
+  {w:'OLİMPİYAT',c:'Spor',h:'Her 4 yılda bir düzenlenir'},
   {w:'DEPREM',c:'Doğa',h:'Yer sarsıntısı'},
   {w:'VOLKAN',c:'Doğa',h:'Lav püskürtür'},
   {w:'KASIRGA',c:'Doğa',h:'Güçlü fırtına'},
   {w:'GÖKKUŞAĞI',c:'Doğa',h:'Yağmur sonrası görülür'},
   {w:'BUZUL',c:'Doğa',h:'Dev buz kütlesi'},
   {w:'ORMAN',c:'Doğa',h:'Ağaçların toplandığı yer'},
-  {w:'ÇÖLLER',c:'Doğa',h:'Kum ve sıcak'},
   {w:'OKYANUS',c:'Doğa',h:'En büyük su kütlesi'},
 ];
 
+/* Türkçe klavye — 3 satır, en uzunu 11 harf */
 var TR_KEYS=[
-  ['Q','W','E','R','T','Y','U','I','O','P','Ğ','Ü'],
+  ['E','R','T','Y','U','I','O','P','Ğ','Ü','Q','W'],
   ['A','S','D','F','G','H','J','K','L','Ş','İ'],
   ['Z','X','C','V','B','N','M','Ö','Ç']
 ];
@@ -191,25 +189,22 @@ function newGame(){
   document.getElementById('ov').classList.remove('on');
   var pick=WORDS[0|Math.random()*WORDS.length];
   word=pick.w.toUpperCase();
-  hint=pick.h;
-  category=pick.c;
+  hint=pick.h; category=pick.c;
   guessed={}; wrong=[]; hintUsed=false; gameOver=false;
-
   document.getElementById('cat').textContent=category;
-  document.getElementById('wrong-row').textContent='';
-  buildKeyboard();
-  renderWord();
-  drawHangman(0);
+  var wr=document.getElementById('wrong-row');
+  wr.textContent=''; wr.style.color='#cc2222';
+  buildKeyboard(); renderWord(); drawHangman(0);
 }
 
 function buildKeyboard(){
-  var el=document.getElementById('kbd');el.innerHTML='';
+  var el=document.getElementById('kbd'); el.innerHTML='';
   for(var i=0;i<TR_KEYS.length;i++){
-    var row=document.createElement('div');row.className='kbd-row';
+    var row=document.createElement('div'); row.className='kbd-row';
     for(var j=0;j<TR_KEYS[i].length;j++){
       var ch=TR_KEYS[i][j];
       var btn=document.createElement('button');
-      btn.className='k';btn.textContent=ch;btn.id='k_'+ch;
+      btn.className='k'; btn.textContent=ch; btn.id='k_'+ch;
       btn.onclick=(function(c){return function(){guess(c);};})(ch);
       row.appendChild(btn);
     }
@@ -218,15 +213,12 @@ function buildKeyboard(){
 }
 
 function renderWord(){
-  var el=document.getElementById('word-row');el.innerHTML='';
+  var el=document.getElementById('word-row'); el.innerHTML='';
   for(var i=0;i<word.length;i++){
     var ch=word[i];
     var div=document.createElement('div');
     if(ch===' '){div.className='letter-box space';}
-    else{
-      div.className='letter-box';
-      div.textContent=guessed[ch]?ch:'';
-    }
+    else{div.className='letter-box';div.textContent=guessed[ch]?ch:'';}
     el.appendChild(div);
   }
 }
@@ -236,13 +228,14 @@ function guess(ch){
   var btn=document.getElementById('k_'+ch);
   if(word.indexOf(ch)>=0){
     guessed[ch]=true;
-    if(btn)btn.className='k hit';
-    renderWord();
-    checkWin();
+    if(btn) btn.className='k hit';
+    renderWord(); checkWin();
   } else {
     wrong.push(ch);
-    if(btn)btn.className='k miss';
-    document.getElementById('wrong-row').textContent=wrong.join('  ');
+    if(btn) btn.className='k miss';
+    var wr=document.getElementById('wrong-row');
+    wr.style.color='#cc2222';
+    wr.textContent=wrong.join('  ');
     drawHangman(wrong.length);
     if(wrong.length>=MAX_WRONG) endGame(false);
   }
@@ -258,12 +251,11 @@ function checkWin(){
 function endGame(win){
   gameOver=true;
   if(win){
-    var pts=hintUsed?5:10;
-    score+=pts;
+    var pts=hintUsed?5:10; score+=pts;
     document.getElementById('score-v').textContent=score;
     document.getElementById('oi').textContent='🎉';
     document.getElementById('ot').textContent='Bildiniz!';
-    document.getElementById('os').textContent='+'+ pts+' puan';
+    document.getElementById('os').textContent='+'+pts+' puan kazandınız';
     document.getElementById('ow').textContent=word;
   } else {
     document.getElementById('oi').textContent='💀';
@@ -286,57 +278,38 @@ function giveHint(){
   },3000);
 }
 
-/* ── Draw hangman ── */
 function drawHangman(n){
   var cv=document.getElementById('gc');
   var cx=cv.getContext('2d');
   cx.clearRect(0,0,160,160);
-  cx.strokeStyle='#333';cx.lineWidth=3;cx.lineCap='round';
-
-  /* gallows */
-  cx.beginPath();cx.moveTo(20,150);cx.lineTo(140,150);cx.stroke(); /* base */
-  cx.beginPath();cx.moveTo(50,150);cx.lineTo(50,20);cx.stroke();   /* pole */
-  cx.beginPath();cx.moveTo(50,20);cx.lineTo(100,20);cx.stroke();   /* top */
-  cx.beginPath();cx.moveTo(100,20);cx.lineTo(100,40);cx.stroke();  /* rope */
-
-  if(n<1) return;
-  /* head */
+  cx.strokeStyle='#333'; cx.lineWidth=3; cx.lineCap='round';
+  cx.beginPath();cx.moveTo(20,150);cx.lineTo(140,150);cx.stroke();
+  cx.beginPath();cx.moveTo(50,150);cx.lineTo(50,20);cx.stroke();
+  cx.beginPath();cx.moveTo(50,20);cx.lineTo(100,20);cx.stroke();
+  cx.beginPath();cx.moveTo(100,20);cx.lineTo(100,40);cx.stroke();
+  if(n<1)return;
   cx.beginPath();cx.arc(100,52,12,0,Math.PI*2);cx.stroke();
-
-  if(n<2) return;
-  /* body */
+  if(n<2)return;
   cx.beginPath();cx.moveTo(100,64);cx.lineTo(100,100);cx.stroke();
-
-  if(n<3) return;
-  /* left arm */
+  if(n<3)return;
   cx.beginPath();cx.moveTo(100,72);cx.lineTo(78,88);cx.stroke();
-
-  if(n<4) return;
-  /* right arm */
+  if(n<4)return;
   cx.beginPath();cx.moveTo(100,72);cx.lineTo(122,88);cx.stroke();
-
-  if(n<5) return;
-  /* left leg */
+  if(n<5)return;
   cx.beginPath();cx.moveTo(100,100);cx.lineTo(78,124);cx.stroke();
-
-  if(n<6) return;
-  /* right leg */
+  if(n<6)return;
   cx.beginPath();cx.moveTo(100,100);cx.lineTo(122,124);cx.stroke();
-
-  /* face: X eyes */
   cx.strokeStyle='#cc2222';cx.lineWidth=2;
   cx.beginPath();cx.moveTo(95,47);cx.lineTo(99,51);cx.stroke();
   cx.beginPath();cx.moveTo(99,47);cx.lineTo(95,51);cx.stroke();
   cx.beginPath();cx.moveTo(103,47);cx.lineTo(107,51);cx.stroke();
   cx.beginPath();cx.moveTo(107,47);cx.lineTo(103,51);cx.stroke();
-  /* sad mouth */
   cx.beginPath();cx.arc(100,58,5,0.2*Math.PI,0.8*Math.PI,true);cx.stroke();
 }
 
-/* keyboard shortcut */
 document.addEventListener('keydown',function(e){
   var ch=e.key.toUpperCase();
-  if(ch==='I') ch='İ';
+  if(ch==='I')ch='İ';
   guess(ch);
 });
 
